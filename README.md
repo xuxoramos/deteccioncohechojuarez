@@ -16,5 +16,5 @@ Se desea construir un sistema inteligence donde se ingresen los datos generales 
 - *Tabla de Socios Padron de Proveedores Juárez Excel.xlsx* - Catálogo de socios de las empresas registradas como proveedores del gobierno de Cd. Juárez.
 
 # Metodología
-1. Comenzar con un análisis exploratorio. Se puede hacer un sanity check a través de la plataforma de Plan Estratégico Juárez, donde hay una serie de visualizaciones descriptivas para soportar la labor de análisis exploratorio.
+1. Comenzar con un análisis exploratorio. Se puede hacer un sanity check a través de [la plataforma de Plan Estratégico Juárez](https://planjuarez.org/regidormx-juarez/a-donde-va-tu-dinero/), donde hay una serie de visualizaciones descriptivas para soportar la labor de análisis exploratorio.
 2. Modelar las relaciones entre empresas, dependencias, montos, frecuencia de otorgamiento y otras variables a manera de grafo.
