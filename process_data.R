@@ -27,9 +27,9 @@ compras_tibble_with_id_relevant_columns <- compras_tibble_with_id %>% select(id,
                                                                              .PERIODO.DE.CONTRATO..INICIO,
                                                                              .PERIODO.DE.CONTRATO..TERMINACIÓN,
                                                                              .FECHA.DE.CONTRATO,
-                                                                             CONCURSANTES.2a.LICITACIÓN)
+                                                                             CONCURSANTES.2a.LICITACIÓN) # Will have to also add CONCURSANTES later
 # Have another go at complete cases
-compras_complete_cases <- compras_tibble_with_id_relevant_columns %>% drop_na() # 476 cases!
+compras_complete_cases <- compras_tibble_with_id_relevant_columns %>% drop_na()
 # Write out to file
 write_excel_csv(compras_complete_cases, path = 'data/processed/compras_complete_cases.csv', col_names = T)
 # Select columns to build graph
@@ -37,8 +37,12 @@ compras_complete_cases_graph <- compras_complete_cases %>% select(id,
                                                                   .PROVEEDOR,
                                                                   UNIDAD.ADMINISTRATIVA.CONVOCANTE,
                                                                   .MONTO.TOTAL.O.MÁXIMO)
+# Remove SA de CV and S de RL DE CV
+compras_complete_cases_graph <- compras_complete_cases_graph %>% mutate(.PROVEEDOR = gsub(', S.A. DE C.V.','',.PROVEEDOR))
+compras_complete_cases_graph <- compras_complete_cases_graph %>% mutate(.PROVEEDOR = gsub(', S. DE R.L. DE C.V.','',.PROVEEDOR))
+
 # Write out to file
-write_excel_csv(compras_complete_cases_relevant_columns, path = 'data/processed/compras_complete_cases_graph.csv', col_names = T)
+write_excel_csv(compras_complete_cases_graph, path = 'data/processed/compras_complete_cases_graph.csv', col_names = T)
 
 
 
