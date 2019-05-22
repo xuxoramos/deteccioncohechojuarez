@@ -1,4 +1,4 @@
-# GlassBox
+# GlassBox (working title)
 Sistema de detección temprana de posibles actos de cohecho en compras y licitaciones de obra pública para Ciudad Juárez.
 
 # Intención
