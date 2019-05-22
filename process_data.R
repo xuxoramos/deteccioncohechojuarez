@@ -1,9 +1,26 @@
 library(readxl)
 library(tidyverse)
 library(igraph)
+
+# Functions
+p <- c(0.2, 0.5, 0.8)
+
+p_names <- map_chr(p, ~paste0(.x*100, "%"))
+
+p_funs <- map(p, ~partial(quantile, probs = .x, na.rm = TRUE)) %>% 
+  set_names(nm = p_names)
+
 # Load data
 compras <- read_excel('./data/raw/Compras y Contratos Municipales Cd. Juárez 2019-05-21.xlsx', sheet = 1, col_names = T, range = 'A1:AP893')
-# Explore complete cases
+socios_padron_proveedores <- read_excel('./data/raw/Tabla de Socios Padron de Proveedores Juárez Excel.xlsx', sheet = 1, col_names = T, range = 'A1:E207')
+directores_dependencias <- read_excel('./data/raw/Dependencias y Directores Cd. Juárez 2019.xlsx', sheet = 1, col_names = T, range = 'A1:B28')
+
+# Turn comma-separated values in column Propietarios into new rows
+socios_padron_proveedores_long <- socios_padron_proveedores %>% separate_rows(Propietarios, sep = ',')
+# Write out to file
+write_excel_csv(socios_padron_proveedores_long, path = 'data/processed/socios_padron_proveedores_long.csv', col_names = T)
+
+# Explore complete cases for compras
 compras_complete_cases <- compras %>% drop_na()
 # How many complete cases?
 nrow(compras_complete_cases) # 0, zilch, nada
@@ -27,7 +44,8 @@ compras_tibble_with_id_relevant_columns <- compras_tibble_with_id %>% select(id,
                                                                              PROCEDENCIA.DE.LOS.RECURSOS,
                                                                              .PERIODO.DE.CONTRATO..INICIO,
                                                                              .PERIODO.DE.CONTRATO..TERMINACIÓN,
-                                                                             .FECHA.DE.CONTRATO) # Will have to also add CONCURSANTES later
+                                                                             .FECHA.DE.CONTRATO,
+                                                                             LICITACIÓN...FECHA) # Will have to also add CONCURSANTES later
 # Other relevant columns:
 # - Convenio Modificatorio
 
